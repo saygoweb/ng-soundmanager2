@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE project>
+<project name="ng-soundmanager2" default="build" basedir="..">
+
+	<property name="application.name" value="soundmanager2-ng" />
+
+	<property name="build.number" value="0.0.1.0" />
+	<property name="build.output" value="output" />
+	<property name="build.libJsFile" value="${build.output}/${application.name}.js" />
+	<property name="build.minJsFile" value="${build.output}/${application.name}-min.js" />
+	<property name="build.uploadPath" value="" />
+
+	<target name="clean">
+		<delete dir="${build.output}" quiet="true" />
+	</target>
+		
+	<target name="build-date">
+		<tstamp>
+			<format property="build.date" pattern="dd MMMM yyyy" />
+		</tstamp>
+		<echo>${build.date}</echo>
+	</target>
+	
+	<target name="version">
+		<script language="javascript">
+			<![CDATA[
+			// getting the value
+			buildnumber = project.getProperty("build.number");
+			index = buildnumber.lastIndexOf(".");
+			project.setProperty("version", buildnumber.substring(0, index));
+			]]>
+		</script>
+		<echo>${version}</echo>
+	</target>
+	
+	<target name="prepare" depends="version">
+		<mkdir dir="${build.output}" />
+	</target>
+	
+	<target name="makelib-js" depends="prepare">
+		<concat destfile="${build.libJsFile}" overwrite="yes" fixlastline="yes">
+			<fileset dir="src"
+				includes="**/*.js"
+				excludes="lib/"
+			/>
+		</concat>
+		<exec executable="/usr/bin/yui-compressor">
+			<arg value="-o" />
+			<arg value="${build.minJsFile}" />
+			<arg value="${build.libJsFile}" />
+		</exec>
+	</target>
+
+	<target name="build" depends="makelib-js" />
+
+	<target name="test" depends="" />
+
+	<target name="restartWebServer">
+		<exec executable="/etc/init.d/apache2">
+			<arg value="restart" />
+		</exec>
+	</target>
+	
+	<!-- Development targets to help developers, not used for production -->
+	
+</project>
