@@ -7,7 +7,8 @@ angular.module('sgw.soundmanager', [])
 		restrict : 'A',
 		replace : false,
 		scope : {
-			'state': '=?'
+			'state': '=?',
+			'href': '='
 		},
 		controller : ["$scope", function($scope) {
 			$scope.state = 'stop';
@@ -15,7 +16,7 @@ angular.module('sgw.soundmanager', [])
 			this.nextState = function() {
 				if (sound == undefined) {
 					sound = soundManager.createSound({
-						url: $scope.audioUrl,
+						url: $scope.href,
 						volume: 50,
 						autoLoad: true,
 						autoPlay: false,
@@ -42,7 +43,7 @@ angular.module('sgw.soundmanager', [])
 		}],
 		link : function(scope, element, attrs, controller) {
 			// Set the audioUrl from the href
-			scope.audioUrl = attrs['href'];
+//			scope.audioUrl = attrs['href'];
 			
 			element.bind('click', function(e) {
 				e.preventDefault();

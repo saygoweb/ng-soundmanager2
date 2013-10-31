@@ -18,6 +18,7 @@ angular.module('sgw.test.soundmanager',
 	
 }])
 .controller('MainCtrl', ['$scope', function($scope) {
+	$scope.audioUrl = "http://www.freshly-ground.com/misc/music/20060826%20-%20Armstrong.mp3";
 	$scope.soundIcon = function() {
 		var map = {
 			'stop': 'icon-play',
