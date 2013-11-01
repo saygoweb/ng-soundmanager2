@@ -7,4 +7,7 @@ Currently we've got a single 3 state link directive:
 
 - stop -> play
 - play -> pause
-- pause -> play 
+- pause -> play
+
+Chekcout the [Live Demo](https://github.com/saygoweb/ng-soundmanager2.git)
+
